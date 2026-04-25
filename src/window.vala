@@ -18,12 +18,50 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+public errordomain MessageError {
+    FAILED;
+}
+
+private const string IMAGE_URL = "https://picsum.photos/800";
+
 [GtkTemplate (ui = "/eu/byquanton/valapixiewood/window.ui")]
 public class Valapixiewood.Window : Adw.ApplicationWindow {
+
     [GtkChild]
-    private unowned Gtk.Label label;
+    private unowned Gtk.Picture picture;
 
     public Window (Gtk.Application app) {
         Object (application: app);
+
+        load_image.begin ();
+    }
+
+    private async void load_image () {
+        try {
+            Bytes image_bytes = yield get_image_bytes (IMAGE_URL);
+            picture.paintable = Gdk.Texture.from_bytes (image_bytes);
+        } catch (Error e) {
+            critical (e.message);
+        }
+    }
+
+    private async Bytes get_image_bytes (string url) throws Error {
+        var session = new Soup.Session ();
+        var message = new Soup.Message.from_uri ("GET", Uri.parse (url, UriFlags.NONE));
+
+        Bytes image_bytes = yield session.send_and_read_async (
+            message,
+            Priority.DEFAULT,
+            null
+        );
+
+        Soup.Status status = message.get_status ();
+        string reason = message.reason_phrase;
+
+        if (status != Soup.Status.OK) {
+            throw new MessageError.FAILED (@"Got $status: $reason");
+        }
+
+        return image_bytes;
     }
 }

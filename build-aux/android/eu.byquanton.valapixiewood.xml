@@ -1,20 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<app xmlns="https://sp1rit.arpa/pixiewood/" xmlns:xi="http://www.w3.org/2001/XInclude">
-  <metainfo target="data/eu.byquanton.valapixiewood.metainfo.xml">
-    <xi:include href="build://aarch64/data/eu.byquanton.valapixiewood.metainfo.xml" parse="xml"/>
-  </metainfo>
-  <style>
-    <theme name="adw"/>
-    <icon type="generate">
-      <drawable target="foreground" scale=".66" type="svg" path="src://build-aux/android/foreground.svg"/>
-      <drawable target="background" type="svg" path="src://build-aux/android/background.svg"/>
-      <drawable target="monochrome" scale=".45" type="svg" path="src://data/icons/hicolor/symbolic/apps/eu.byquanton.valapixiewood-symbolic.svg"/>
-    </icon>
-  </style>
-  <dependencies>
-    <glib>
-      <patch>hack</patch>
-    </glib>
-  </dependencies>
-  <build target="valapixiewood"></build>
+<app xmlns="https://sp1rit.arpa/pixiewood/">
+    <metainfo>
+        <component type="desktop-application"  xmlns="https://specifications.freedesktop.org/metainfo/1.0">
+            <id>eu.byquanton.valapixiewood</id>
+
+            <metadata_license>CC0-1.0</metadata_license>
+            <project_license>GPL-3.0-or-later</project_license>
+
+            <name>ValaPixiewood</name>
+            <summary>Keep the summary shorter</summary>
+
+            <description>
+                <p>No description</p>
+            </description>
+
+            <developer id="tld.vendor">
+                <name>Developer name</name>
+            </developer>
+
+            <url type="homepage">https://example.org/</url>
+
+            <launchable type="desktop-id">
+                eu.byquanton.valapixiewood.desktop
+            </launchable>
+
+            <branding>
+                <color scheme_preference="light" type="primary">#ff00ff</color>
+                <color scheme_preference="dark" type="primary">#993d3d</color>
+            </branding>
+
+            <releases>
+                <release version="1.0.1" date="2024-01-18">
+                    <url type="details">https://example.org/changelog.html#version_1.0.1</url>
+                    <description translate="no">
+                        <p>Release description</p>
+                        <ul>
+                            <li>List of changes</li>
+                            <li>List of changes</li>
+                        </ul>
+                    </description>
+                </release>
+            </releases>
+        </component>
+    </metainfo>
+    <style>
+        <theme name="adw" />
+        <icon type="generate">
+            <drawable path="src://data/icons/hicolor/scalable/apps/eu.byquanton.valapixiewood.svg" scale=".66" target="foreground" type="svg"/>
+            <color target="background">#FFFFFF</color>
+            <drawable path="src://data/icons/hicolor/symbolic/apps/eu.byquanton.valapixiewood-symbolic.svg" scale=".66" target="monochrome" type="svg"/>
+        </icon>
+    </style>
+    <dependencies>
+        <glib>
+            <patch>hack</patch>
+        </glib>
+    </dependencies>
+    <requires>
+        <internet>always</internet>
+    </requires>
+    <build target="valapixiewood">
+        <configure-options>
+            <option>-Dlibadwaita:introspection=disabled</option>
+            <option>-Dlibadwaita:tests=false</option>
+            <option>-Dlibadwaita:examples=false</option>
+            <option>-Dgtk:introspection=disabled</option>
+            <option>-Dgtk:media-gstreamer=disabled</option>
+            <option>-Dlibsoup:introspection=disabled</option>
+            <option>-Dlibsoup:docs=disabled</option>
+            <option>-Dlibsoup:tests=false</option>
+            <option>-Dlibsoup:tls_check=true</option>
+            <option>-Dglib:introspection=disabled</option>
+            <option>-Dglib-networking:libproxy=disabled</option>
+            <option>-Dglib-networking:gnome_proxy=disabled</option>
+            <option>-Dglib-networking:environment_proxy=disabled</option>
+            <option>-Dglib-networking:gnutls=disabled</option>
+            <option>-Dglib-networking:openssl=enabled</option>
+        </configure-options>
+        <architectures>
+            <arch>x86_64</arch>
+        </architectures>
+    </build>
 </app>

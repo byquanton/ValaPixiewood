@@ -1,0 +1,17 @@
+.idea
+.vscode
+.pixiewood
+subprojects/**/
+!subprojects/packagefiles
+subprojects/*.wrap
+!subprojects/glib.wrap
+!subprojects/glib-networking.wrap
+!subprojects/gtk.wrap
+!subprojects/libadwaita.wrap
+!subprojects/libpsl.wrap
+
+!subprojects/libsoup.wrap
+!subprojects/nghttp2.wrap
+!subprojects/openssl.wrap
+!subprojects/sqlite3.wrap
+.buildconfig
