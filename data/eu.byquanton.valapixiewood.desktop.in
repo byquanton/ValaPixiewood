@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=ValaPixiewood
+Exec=valapixiewood
+Icon=eu.byquanton.valapixiewood
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

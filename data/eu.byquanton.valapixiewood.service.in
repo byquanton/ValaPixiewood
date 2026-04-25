@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=eu.byquanton.valapixiewood
+Exec=@bindir@/valapixiewood --gapplication-service
