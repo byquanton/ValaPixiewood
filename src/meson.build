@@ -8,7 +8,6 @@ valapixiewood_deps = [
   config_dep,
   dependency('gtk4'),
   dependency('libsoup-3.0'),
-  dependency('glib-networking'),
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
 

@@ -18,6 +18,10 @@
                 <name>Developer name</name>
             </developer>
 
+            <requires>
+                <internet>always</internet>
+            </requires>
+
             <url type="homepage">https://example.org/</url>
 
             <launchable type="desktop-id">
@@ -56,9 +60,6 @@
             <patch>hack</patch>
         </glib>
     </dependencies>
-    <requires>
-        <internet>always</internet>
-    </requires>
     <build target="valapixiewood">
         <configure-options>
             <option>-Dlibadwaita:introspection=disabled</option>
@@ -77,8 +78,5 @@
             <option>-Dglib-networking:gnutls=disabled</option>
             <option>-Dglib-networking:openssl=enabled</option>
         </configure-options>
-        <architectures>
-            <arch>x86_64</arch>
-        </architectures>
     </build>
 </app>
