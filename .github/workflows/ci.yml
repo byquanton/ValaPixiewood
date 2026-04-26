@@ -1,0 +1,90 @@
+name: CI Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:sid
+      options: --env DEBIAN_FRONTEND=noninteractive
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            ca-certificates \
+            curl \
+            git \
+            xz-utils \
+            unzip \
+            zip \
+            python3 \
+            python3-pip \
+            pkg-config \
+            build-essential \
+            valac \
+            meson \
+            ninja-build \
+            libgtk-4-dev \
+            libadwaita-1-dev \
+            libgee-0.8-dev \
+            libjson-glib-dev \
+            libecal2.0-dev \
+            libsoup-3.0-dev \
+            sqlite3 \
+            libsqlite3-dev \
+            gettext \
+            desktop-file-utils \
+            libglib-perl \
+            libglib-object-introspection-perl \
+            libipc-run-perl \
+            libjson-perl \
+            libset-scalar-perl \
+            libxml-libxml-perl \
+            libxml-libxslt-perl \
+            gir1.2-appstream \
+            openjdk-17-jdk \
+            build-essential \
+            glslc \
+            gobject-introspection \
+            libglib2.0-dev-bin \
+            libxml2-utils \
+            meson \
+            ninja-build \
+            sassc \
+            sdkmanager
+
+      - name: Clone gtk-android-builder
+        run: git clone https://github.com/sp1ritCS/gtk-android-builder /opt/gtk-android-builder
+
+      - name: Clone mini-studio
+        run: git clone https://github.com/sp1ritCS/mini-studio /opt/mini-studio
+
+      - name: Accept Android SDK licenses
+        run: yes | sdkmanager --licenses
+
+      - name: Install Android SDK components
+        run: sdkmanager --install "ndk;27.3.13750724" "platform-tools" "platforms;android-31" "cmdline-tools;latest"
+
+      - name: Pixiewood prepare
+        run: /opt/gtk-android-builder/pixiewood -v prepare -a /opt/mini-studio -s /opt/android-sdk/ build-aux/android/eu.byquanton.valapixiewood.xml
+
+      - name: Pixiewood generate
+        run: /opt/gtk-android-builder/pixiewood -v generate
+
+      - name: Pixiewood build
+        run: /opt/gtk-android-builder/pixiewood -v build
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: debug-apk
+          path: .pixiewood/android/app/build/outputs/apk/debug/*.apk
