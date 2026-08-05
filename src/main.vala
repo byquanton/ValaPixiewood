@@ -18,10 +18,19 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
+#if ANDROID
+[CCode (cname = "g_io_openssl_load")]
+extern void g_io_openssl_load (GLib.IOModule? module);
+#endif
+
 int main (string[] args) {
     Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
     Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
     Intl.textdomain (Config.GETTEXT_PACKAGE);
+
+#if ANDROID
+    g_io_openssl_load (null);
+#endif
 
     var app = new Valapixiewood.Application ();
     return app.run (args);

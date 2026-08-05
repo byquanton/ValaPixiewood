@@ -11,6 +11,11 @@ valapixiewood_deps = [
   dependency('libadwaita-1', version: '>= 1.4'),
 ]
 
+if host_machine.system() == 'android'
+  valapixiewood_deps += dependency('gioopenssl')
+  add_project_arguments(['--define=ANDROID'], language: 'vala')
+endif
+
 valapixiewood_sources += gnome.compile_resources('valapixiewood-resources',
   'valapixiewood.gresource.xml',
   c_name: 'valapixiewood'

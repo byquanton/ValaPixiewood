@@ -23,7 +23,7 @@ config_inc = include_directories('.')
 add_project_arguments('-DGETTEXT_PACKAGE="' + meson.project_name () + '"', language: 'c')
 
 if host_machine.system() == 'android'
-  subproject('glib-networking')
+  subproject('glib-networking', default_options: ['default_library=static'])
 endif
 
 subdir('data')
